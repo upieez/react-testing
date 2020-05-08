@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+	state = {
+		message: "Hello Dogs!",
+		dogImg: {},
+		load: true,
+	};
+
+	componentDidMount() {
+		fetch("https://dog.ceo/api/breeds/image/random")
+			.then((data) => data.json())
+			.then((data) => {
+				console.log(data);
+				this.setState({ dogImg: data, load: false });
+			});
+	}
+
+	generateRandomPicture = () => {
+		this.setState({ load: true });
+		fetch("https://dog.ceo/api/breeds/image/random")
+			.then((data) => data.json())
+			.then((data) => {
+				console.log(data);
+				this.setState({ dogImg: data, load: false });
+			});
+	};
+
+	render() {
+		return (
+			<div className='App'>
+				<h1>{this.state.message}</h1>
+				{this.state.load ? (
+					"loading..."
+				) : (
+					<img src={this.state.dogImg.message} alt='random dog' />
+				)}
+				<br />
+				<button onClick={this.generateRandomPicture}>Random!</button>
+			</div>
+		);
+	}
 }
 
 export default App;
