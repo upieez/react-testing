@@ -9,12 +9,7 @@ class App extends React.Component {
 	};
 
 	componentDidMount() {
-		fetch("https://dog.ceo/api/breeds/image/random")
-			.then((data) => data.json())
-			.then((data) => {
-				console.log(data);
-				this.setState({ dogImg: data, load: false });
-			});
+		this.generateRandomPicture();
 	}
 
 	generateRandomPicture = () => {
